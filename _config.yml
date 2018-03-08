@@ -21,3 +21,9 @@ defaults:
   values:
     layout: page
 permalink: pretty
+# This will require each of these plugins automatically.
+plugins:
+  - jekyll-gist
+  - jekyll-coffeescript
+  - jekyll-assets
+  - another-jekyll-plugin
