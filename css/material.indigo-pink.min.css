@@ -1,5 +1,28 @@
 element.style {
 }
+.mdl-layout__header-row>* {
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+}
+a {
+    color: rgb(255,64,129);
+    font-weight: 500;
+}
+a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu, .mdl-icon-toggle, .mdl-item, .mdl-radio, .mdl-slider, .mdl-switch, .mdl-tabs__tab {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+}
+user agent stylesheet
+a:-webkit-any-link:active {
+    color: -webkit-activelink;
+}
+user agent stylesheet
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
 .mdl-layout__header-row {
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -26,10 +49,6 @@ element.style {
     height: 56px;
     margin: 0;
     padding: 0 40px 0 20px;
-}
-user agent stylesheet
-div {
-    display: block;
 }
 .mdl-layout__header {
     display: -webkit-flex;
