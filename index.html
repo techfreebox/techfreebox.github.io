@@ -1,38 +1,86 @@
-   <!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>
+<html class="lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html>
+<!--<![endif]-->
     <head>
-     
-        
-       
-        
-            <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta http-equiv="Cache-Control" content="no-cache">
-            <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-            <link rel="shortcut icon" href="/favicon.png">
-            <!-- Bootstrap core CSS -->
-            <link href="/css/bootstrap.min.css" rel="stylesheet"><!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-            <link href="/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-            <script src="/assets/js/ie-emulation-modes-warning.js">
-            </script><!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-            <!--[if lt IE 9]><script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js">
-</script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
-            <!-- Custom styles for this template здесь -->
-        <link href="/css/header.css" rel="stylesheet"><link href="/css/carousel.css" rel="stylesheet">
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ title }}</title>
-        <link rel="stylesheet" href="css/material.indigo-pink.min.css">
+        <meta name="viewport" content="">
+        <script type="text/javascript">
+            (function(doc) {
+
+                var addEvent = 'addEventListener',
+                    type = 'gesturestart',
+                    qsa = 'querySelectorAll',
+                    scales = [.8, .8],
+                    meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
+
+                function fix() {
+                    meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
+                    doc.removeEventListener(type, fix, true);
+                }
+
+                if ((meta = meta[meta.length - 1]) && addEvent in doc) {
+                    fix();
+                    scales = [.9, .9];
+                    doc[addEvent](type, fix, true);
+                }
+            }(document));
+        </script>
+        <title>Samsy Lab</title>
+
+        <meta name="description" content="Samsy Lab / Creative Tech / 3D Dev">
+
+        <meta property="og:title" content="Samsy Lab / Creative Tech / 3D Dev">
+        <meta property="og:description" content="Samsy Lab / Creative Tech / 3D Dev based in London.">
+        <meta property="og:type"  content="website" /> 
+        <meta property="og:image" content="http://samsy.ninja/lab/media/fb2.jpg">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:image:width" content="1230">
+        <meta property="og:image:height" content="600">
+        <meta property="og:site_name" content="Samsy Lab / Creative Tech / 3D Dev">
+        <meta property="og:url" content="http://lab.samsy.ninja">
+
+        <meta itemprop="name" content="Samsy Lab / Creative Tech / 3D Dev">
+        <meta itemprop="description" content="Samsy Lab Lab/ Creative Tech / 3D Dev">
+        <meta itemprop="image" content="http://samsy.ninja/lab/media/fb2.jpg">
+
+        <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+
+        <meta name="author" content="Samsy Lab">
         
-    
-    </head> 
-    <header class="mdl-layout__header mdl-color--black mdl-color-text--white-600"></header>
-                <div class="mdl-layout__header-row"> <div class="mdl-layout--fixed-header">
-                    <span class="mdl-layout-title">TECHFREEBOX</span>
-                    <a href="https://techfreebox.github.io/"id="view-source">[github.io]</a>
-                    <div class="mdl-textfield"></div>   
+        <link rel="stylesheet" href="http://samsy.ninja/lunar/css/main.css?version=1.0">
+
+
+    </head>
+
+    <body>
+
+        
+
+
+        <div class='fonts-load'>
+
+          <div style="font-family:'maisonneue-demi-webfont'"></div>
+
+        </div>
+
+
+        <div class='wrapper'></div>
+ 
+
+        <script src="bundle.js?version=1.0"></script>     
        
-                  
-          
+    </body>
+    
+</html>
