@@ -1,86 +1,191 @@
 <!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js canvas - particles - waves</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #000000;
+				margin: 0px;
+				overflow: hidden;
+			}
 
-<!--[if lt IE 7]>
-<html class="lt-ie9 lt-ie8 lt-ie7">
-<![endif]-->
-<!--[if IE 7]>
-<html class="lt-ie9 lt-ie8">
-<![endif]-->
-<!--[if IE 8]>
-<html class="lt-ie9">
-<![endif]-->
-<!--[if gt IE 8]><!-->
-<html>
-<!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="">
-        <script type="text/javascript">
-            (function(doc) {
+			a {
+				color:#0078ff;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="../build/three.js"></script>
 
-                var addEvent = 'addEventListener',
-                    type = 'gesturestart',
-                    qsa = 'querySelectorAll',
-                    scales = [.8, .8],
-                    meta = qsa in doc ? doc[qsa]('meta[name=viewport]') : [];
+		<script src="js/renderers/Projector.js"></script>
+		<script src="js/renderers/CanvasRenderer.js"></script>
 
-                function fix() {
-                    meta.content = 'width=device-width,minimum-scale=' + scales[0] + ',maximum-scale=' + scales[1];
-                    doc.removeEventListener(type, fix, true);
-                }
+		<script src="js/libs/stats.min.js"></script>
 
-                if ((meta = meta[meta.length - 1]) && addEvent in doc) {
-                    fix();
-                    scales = [.9, .9];
-                    doc[addEvent](type, fix, true);
-                }
-            }(document));
-        </script>
-        <title>Samsy Lab</title>
+		<script>
 
-        <meta name="description" content="Samsy Lab / Creative Tech / 3D Dev">
+			var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
 
-        <meta property="og:title" content="Samsy Lab / Creative Tech / 3D Dev">
-        <meta property="og:description" content="Samsy Lab / Creative Tech / 3D Dev based in London.">
-        <meta property="og:type"  content="website" /> 
-        <meta property="og:image" content="http://samsy.ninja/lab/media/fb2.jpg">
-        <meta property="og:image:type" content="image/jpeg">
-        <meta property="og:image:width" content="1230">
-        <meta property="og:image:height" content="600">
-        <meta property="og:site_name" content="Samsy Lab / Creative Tech / 3D Dev">
-        <meta property="og:url" content="http://lab.samsy.ninja">
+			var container, stats;
+			var camera, scene, renderer;
 
-        <meta itemprop="name" content="Samsy Lab / Creative Tech / 3D Dev">
-        <meta itemprop="description" content="Samsy Lab Lab/ Creative Tech / 3D Dev">
-        <meta itemprop="image" content="http://samsy.ninja/lab/media/fb2.jpg">
+			var particles, particle, count = 0;
 
-        <link rel="shortcut icon" href="media/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+			var mouseX = 0, mouseY = 0;
 
-        <meta name="author" content="Samsy Lab">
-        
-        <link rel="stylesheet" href="main.css?version=1.0">
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
 
+			init();
+			animate();
 
-    </head>
+			function init() {
 
-    <body>
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
 
-        
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = 1000;
 
+				scene = new THREE.Scene();
 
-        <div class='fonts-load'>
+				particles = new Array();
 
-          <div style="font-family:'maisonneue-demi-webfont'"></div>
+				var PI2 = Math.PI * 2;
+				var material = new THREE.SpriteCanvasMaterial( {
 
-        </div>
+					color: 0xffffff,
+					program: function ( context ) {
 
+						context.beginPath();
+						context.arc( 0, 0, 0.5, 0, PI2, true );
+						context.fill();
 
-        <div class='wrapper'></div>
- 
+					}
 
-        <script src="bundle.js?version=1.0"></script>     
-       
-    </body>
-    
+				} );
+
+				var i = 0;
+
+				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+						particle = particles[ i ++ ] = new THREE.Sprite( material );
+						particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+						particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+						scene.add( particle );
+
+					}
+
+				}
+
+				renderer = new THREE.CanvasRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				stats = new Stats();
+				container.appendChild( stats.dom );
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+				stats.update();
+
+			}
+
+			function render() {
+
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				camera.lookAt( scene.position );
+
+				var i = 0;
+
+				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+						particle = particles[ i++ ];
+						particle.position.y = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
+							( Math.sin( ( iy + count ) * 0.5 ) * 50 );
+						particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 4 +
+							( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 4;
+
+					}
+
+				}
+
+				renderer.render( scene, camera );
+
+				count += 0.1;
+
+			}
+
+		</script>
+	</body>
 </html>
